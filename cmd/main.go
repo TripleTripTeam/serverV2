@@ -16,5 +16,5 @@ func main() {
 	http.HandleFunc("/print", h.Print)
 	http.HandleFunc("/output.csv", h.Output)
 	http.HandleFunc("/sendCoords", h.SendCoords)
-	http.ListenAndServe("192.168.43.25:8000", nil)
+	http.ListenAndServe("192.168.1.66:8000", nil)
 }

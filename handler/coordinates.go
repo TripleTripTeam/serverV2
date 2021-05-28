@@ -39,20 +39,27 @@ func (h *Handler) SendCoords(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("sendCoords")
 	err = json.Unmarshal(body, &input)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	fmt.Println(input.Dist)
 	for j, dist := range input.Dist {
+		if dist == 0 {
+			continue
+		}
 		var coord Coord
-		teta := math.Pi/2 - (StartAngle + Step*float64(j))
+		var teta float64
+		if StartAngle+Step*float64(j) < 0 {
+			teta = math.Pi/2 - (StartAngle + Step*float64(j)) + 2*math.Pi
+		} else {
+			teta = math.Pi/2 - (StartAngle + Step*float64(j))
+		}
+
 		coord.X = dist * math.Sin(teta) * math.Cos(input.Phi)
 		coord.Y = dist * math.Sin(teta) * math.Sin(input.Phi)
-		coord.Z = dist * math.Cos(teta)
+		coord.Z = dist * math.Cos(teta) /*- math.Cos(teta) / math.Sin(teta) * math.Sqrt(coord.X * coord.X + coord.Y * coord.Y) */
 		h.gbChan <- coord
 	}
 
