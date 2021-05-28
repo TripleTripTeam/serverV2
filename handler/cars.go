@@ -2,7 +2,7 @@ package handler
 
 import (
 	"encoding/json"
-	"math/rand"
+	"fmt"
 	"net/http"
 )
 
@@ -15,9 +15,11 @@ func (h *Handler) MoveCar(w http.ResponseWriter, r *http.Request) {
 
 	var resp moveResponse
 	w.Header().Set("Content-Type", "application/json")
-
-	resp.Speed = 10.0 - rand.Float64()
-	resp.Angle = 1 - rand.Float64()*3
+	fmt.Println("move")
+	// resp.Speed = 10.0 - rand.Float64()
+	// resp.Angle = 1 - rand.Float64()*3
+	resp.Speed = 0
+	resp.Angle = 0
 
 	jsonResp, err := json.Marshal(resp)
 	if err != nil {

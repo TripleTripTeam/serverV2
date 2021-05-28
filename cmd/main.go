@@ -13,7 +13,8 @@ func main() {
 	go h.CoordProcess()
 
 	http.HandleFunc("/moveCar", h.MoveCar)
+	http.HandleFunc("/print", h.Print)
+	http.HandleFunc("/output.csv", h.Output)
 	http.HandleFunc("/sendCoords", h.SendCoords)
-
-	http.ListenAndServe("localhost:8000", nil)
+	http.ListenAndServe("192.168.43.25:8000", nil)
 }

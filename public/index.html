@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+{{define "data"}}
+123
+{{end}}
+<div id='myDiv'><!-- Plotly chart will be drawn inside this DIV --></div>
+
+</body>
+<script>
+	Plotly.d3.csv('/output.csv', function(err, rows){
+    function unpack(rows, key) {
+    	return rows.map(function(row)
+    	{ return row[key]; });}
+
+    var trace1 = {
+    	x:unpack(rows, 'x1'), y: unpack(rows, 'y1'), z: unpack(rows, 'z1'),
+    	mode: 'markers',
+    	marker: {
+    		size: 2,
+    		line: {
+    		color: 'rgba(250, 90, 12, 1)',
+    		width: 0.5},
+    		opacity: 1},
+    	type: 'scatter3d'
+    };
+
+    var data = [trace1];
+    var layout = {margin: {
+    	l: 0,
+    	r: 0,
+    	b: 0,
+    	t: 0
+      }};
+    Plotly.newPlot('myDiv', data, layout);
+    });
+
+</script>
+</html>
